@@ -15,6 +15,8 @@ app = Flask(__name__)
 
 users = {}
 
+CHANNEL = "@task25rs"
+
 # ===== TEXT =====
 
 disclaimer = """⚠️ Disclaimer
@@ -34,37 +36,6 @@ No shortcuts. No confusion.
 Just clear thinking and practical understanding.
 
 Follow the sections below in order 👇
-"""
-
-clarity = """🧩 Clarity
-
-You’ll understand:
-• What price movement represents
-• Why charts behave this way
-• Basic platform understanding
-• Common beginner confusion
-
-👉 This removes confusion instantly.
-"""
-
-observation = """👁 Observation
-
-• Identify trends
-• Recognize sideways markets
-• Watch reaction zones
-• Understand behavior
-
-👉 Don’t predict — observe.
-"""
-
-thinking = """🧠 Thinking
-
-• Emotions cause mistakes
-• Slow down decisions
-• Know when to stay out
-• Build consistency
-
-👉 Thinking is your real edge.
 """
 
 learn_more = """🎯 Learn More
@@ -99,7 +70,7 @@ def start(msg):
     uid = msg.from_user.id
 
     if uid not in users:
-        users[uid] = {"steps": set(), "quiz": 0}
+        users[uid] = {"quiz": 0}
 
         d = bot.send_message(msg.chat.id, disclaimer)
         try:
@@ -110,22 +81,22 @@ def start(msg):
     bot.send_message(msg.chat.id, welcome, reply_markup=menu())
 
 
-# ===== STEPS =====
+# ===== STEPS (CHANNEL CONTENT) =====
 
 @bot.message_handler(func=lambda m: m.text == "🧩 Step 1: Clarity")
 def s1(m):
     typing(m.chat.id)
-    bot.send_message(m.chat.id, clarity)
+    bot.copy_message(m.chat.id, CHANNEL, 79)
 
 @bot.message_handler(func=lambda m: m.text == "👁 Step 2: Observation")
 def s2(m):
     typing(m.chat.id)
-    bot.send_message(m.chat.id, observation)
+    bot.copy_message(m.chat.id, CHANNEL, 78)
 
 @bot.message_handler(func=lambda m: m.text == "🧠 Step 3: Thinking")
 def s3(m):
     typing(m.chat.id)
-    bot.send_message(m.chat.id, thinking)
+    bot.copy_message(m.chat.id, CHANNEL, 77)
 
 @bot.message_handler(func=lambda m: m.text == "💬 Continue")
 def s4(m):
@@ -133,7 +104,7 @@ def s4(m):
     bot.send_message(m.chat.id, learn_more)
 
 
-# ===== QUIZ SYSTEM =====
+# ===== QUIZ =====
 
 def q1(chat_id):
     kb = InlineKeyboardMarkup()
@@ -164,7 +135,6 @@ def q3(chat_id):
 
 @bot.message_handler(func=lambda m: m.text == "🎯 Quick Check")
 def start_quiz(m):
-    users[m.from_user.id]["quiz"] = 1
     typing(m.chat.id)
     q1(m.chat.id)
 
@@ -173,38 +143,36 @@ def start_quiz(m):
 
 @bot.callback_query_handler(func=lambda call: True)
 def handle(call):
-    uid = call.from_user.id
 
     typing(call.message.chat.id)
 
     if call.data == "q1_b":
-        bot.send_message(call.message.chat.id, "✅ Great! Correct Answer")
+        bot.send_message(call.message.chat.id, "✅ Great!! It's Correct Answer")
         q2(call.message.chat.id)
     elif call.data.startswith("q1"):
         bot.send_message(call.message.chat.id, "❌ Correct Answer: B) Observe the market")
         q2(call.message.chat.id)
 
     elif call.data == "q2_c":
-        bot.send_message(call.message.chat.id, "✅ Great! Correct Answer")
+        bot.send_message(call.message.chat.id, "✅ Great!! It's Correct Answer")
         q3(call.message.chat.id)
     elif call.data.startswith("q2"):
         bot.send_message(call.message.chat.id, "❌ Correct Answer: C) Emotions")
         q3(call.message.chat.id)
 
     elif call.data == "q3_b":
-        bot.send_message(call.message.chat.id, "✅ Great! Correct Answer")
+        bot.send_message(call.message.chat.id, "✅ Great!! It's Correct Answer")
         threading.Thread(target=final_msg, args=(call.message.chat.id,)).start()
     elif call.data.startswith("q3"):
         bot.send_message(call.message.chat.id, "❌ Correct Answer: B) Structured thinking")
         threading.Thread(target=final_msg, args=(call.message.chat.id,)).start()
 
 
-# ===== FINAL MESSAGE =====
+# ===== FINAL MESSAGE (3 sec delay) =====
 
 def final_msg(chat_id):
     time.sleep(3)
 
-    # typing feel before final msg
     for _ in range(2):
         bot.send_chat_action(chat_id, 'typing')
         time.sleep(1)
