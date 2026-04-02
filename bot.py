@@ -6,16 +6,12 @@ from flask import Flask, request
 from telebot.types import ReplyKeyboardMarkup, InlineKeyboardMarkup, InlineKeyboardButton
 
 TOKEN = os.environ.get("BOT_TOKEN")
-
-if not TOKEN:
-    raise ValueError("BOT_TOKEN not found")
+ADMIN_ID = 6411315434
 
 bot = telebot.TeleBot(TOKEN)
 app = Flask(__name__)
 
 users = {}
-CHANNEL = "@task25rs"
-
 
 # ===== TEXT =====
 
@@ -38,12 +34,53 @@ Just clear thinking and practical understanding.
 Follow the sections below in order 👇
 """
 
-learn_more = """🎯 Learn More
+clarity_text = """You’ll understand:
+• What price movement actually represents
+• Why charts behave the way they do
+• Basic platform understanding
+• Common beginner confusion
 
-If you’ve completed the steps, you’re ahead of most.
-
-📩 Continue here: @QXEmpire_Team
+👉 This removes 70% confusion instantly.
 """
+
+observation_text = """Now learn to observe.
+
+• Identify simple trends
+• Recognize sideways markets
+• Watch reaction zones
+• Understand behavior patterns
+
+👉 Don’t predict — observe.
+"""
+
+thinking_text = """Now improve decision thinking.
+
+• Why emotions create mistakes
+• How to slow down decisions
+• When to stay out
+• Building consistency
+
+👉 Thinking is your real edge.
+"""
+
+learn_more = """If you’ve completed the steps, you’re already ahead of most learners.
+
+But learning alone can still feel confusing.
+
+If you want:
+• Clear explanations
+• Help understanding charts
+• Guidance on next steps
+
+📩 Continue your learning here : @QXEmpire_Team
+
+👉 Ask your questions and move forward with clarity
+"""
+
+# ===== IMAGE LINKS (channel images direct links) =====
+CLARITY_IMG = "https://t.me/task25rs/79"
+OBSERVATION_IMG = "https://t.me/task25rs/78"
+THINKING_IMG = "https://t.me/task25rs/77"
 
 
 # ===== MENU =====
@@ -64,15 +101,6 @@ def typing(chat_id):
         time.sleep(1)
 
 
-# ===== SAFE IMAGE SEND =====
-
-def send_post(chat_id, post_id):
-    try:
-        bot.copy_message(chat_id, CHANNEL, post_id)
-    except:
-        bot.forward_message(chat_id, CHANNEL, post_id)
-
-
 # ===== START =====
 
 @bot.message_handler(commands=['start'])
@@ -81,6 +109,8 @@ def start(msg):
 
     if uid not in users:
         users[uid] = {}
+
+        bot.send_message(ADMIN_ID, f"🆕 New User\nID: {uid}\nName: {msg.from_user.first_name}")
 
         d = bot.send_message(msg.chat.id, disclaimer)
         try:
@@ -91,24 +121,24 @@ def start(msg):
     bot.send_message(msg.chat.id, welcome, reply_markup=menu())
 
 
-# ===== STEPS =====
+# ===== STEPS (IMAGE + CAPTION SAME MSG) =====
 
 @bot.message_handler(func=lambda m: m.text == "🧩 Step 1: Clarity")
 def step1(m):
     typing(m.chat.id)
-    send_post(m.chat.id, 79)
+    bot.send_photo(m.chat.id, CLARITY_IMG, caption=clarity_text)
 
 
 @bot.message_handler(func=lambda m: m.text == "👁 Step 2: Observation")
 def step2(m):
     typing(m.chat.id)
-    send_post(m.chat.id, 78)
+    bot.send_photo(m.chat.id, OBSERVATION_IMG, caption=observation_text)
 
 
 @bot.message_handler(func=lambda m: m.text == "🧠 Step 3: Thinking")
 def step3(m):
     typing(m.chat.id)
-    send_post(m.chat.id, 77)
+    bot.send_photo(m.chat.id, THINKING_IMG, caption=thinking_text)
 
 
 @bot.message_handler(func=lambda m: m.text == "💬 Continue")
@@ -154,8 +184,6 @@ def start_quiz(m):
     q1(m.chat.id)
 
 
-# ===== ANSWERS =====
-
 @bot.callback_query_handler(func=lambda call: True)
 def handle(call):
     chat_id = call.message.chat.id
@@ -165,7 +193,6 @@ def handle(call):
     if call.data == "q1_b":
         bot.send_message(chat_id, "✅ Great!! It's Correct Answer")
         q2(chat_id)
-
     elif call.data.startswith("q1"):
         bot.send_message(chat_id, "❌ Correct Answer: B) Observe the market")
         q2(chat_id)
@@ -173,7 +200,6 @@ def handle(call):
     elif call.data == "q2_c":
         bot.send_message(chat_id, "✅ Great!! It's Correct Answer")
         q3(chat_id)
-
     elif call.data.startswith("q2"):
         bot.send_message(chat_id, "❌ Correct Answer: C) Emotions")
         q3(chat_id)
@@ -181,7 +207,6 @@ def handle(call):
     elif call.data == "q3_b":
         bot.send_message(chat_id, "✅ Great!! It's Correct Answer")
         threading.Thread(target=final_msg, args=(chat_id,)).start()
-
     elif call.data.startswith("q3"):
         bot.send_message(chat_id, "❌ Correct Answer: B) Structured thinking")
         threading.Thread(target=final_msg, args=(chat_id,)).start()
@@ -219,7 +244,5 @@ def home():
 
 if __name__ == "__main__":
     bot.remove_webhook()
-    bot.set_webhook(
-        url=os.environ.get("RENDER_EXTERNAL_URL") + "/" + TOKEN
-    )
+    bot.set_webhook(url=os.environ.get("RENDER_EXTERNAL_URL") + "/" + TOKEN)
     app.run(host="0.0.0.0", port=10000)
