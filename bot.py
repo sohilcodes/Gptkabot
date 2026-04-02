@@ -64,7 +64,7 @@ def typing(chat_id):
         time.sleep(1)
 
 
-# ===== SAFE SEND (IMAGE + CAPTION FIX) =====
+# ===== SAFE IMAGE SEND =====
 
 def send_post(chat_id, post_id):
     try:
@@ -94,22 +94,25 @@ def start(msg):
 # ===== STEPS =====
 
 @bot.message_handler(func=lambda m: m.text == "🧩 Step 1: Clarity")
-def s1(m):
+def step1(m):
     typing(m.chat.id)
     send_post(m.chat.id, 79)
 
+
 @bot.message_handler(func=lambda m: m.text == "👁 Step 2: Observation")
-def s2(m):
+def step2(m):
     typing(m.chat.id)
     send_post(m.chat.id, 78)
 
+
 @bot.message_handler(func=lambda m: m.text == "🧠 Step 3: Thinking")
-def s3(m):
+def step3(m):
     typing(m.chat.id)
     send_post(m.chat.id, 77)
 
+
 @bot.message_handler(func=lambda m: m.text == "💬 Continue")
-def s4(m):
+def step4(m):
     typing(m.chat.id)
     bot.send_message(m.chat.id, learn_more)
 
@@ -125,31 +128,6 @@ def q1(chat_id):
     )
     bot.send_message(chat_id, "Question 1:\n\nWhat is the first step before making any decision?", reply_markup=kb)
 
+
 def q2(chat_id):
-    kb = InlineKeyboardMarkup()
-    kb.add(
-        InlineKeyboardButton("A) Charts", callback_data="q2_a"),
-        InlineKeyboardButton("B) Strategy", callback_data="q2_b"),
-        InlineKeyboardButton("C) Emotions", callback_data="q2_c")
-    )
-    bot.send_message(chat_id, "Question 2:\n\nWhat causes most mistakes?", reply_markup=kb)
-
-def q3(chat_id):
-    kb = InlineKeyboardMarkup()
-    kb.add(
-        InlineKeyboardButton("A) Random actions", callback_data="q3_a"),
-        InlineKeyboardButton("B) Structured thinking", callback_data="q3_b")
-    )
-    bot.send_message(chat_id, "Question 3:\n\nWhat is better?", reply_markup=kb)
-
-
-@bot.message_handler(func=lambda m: m.text == "🎯 Quick Check")
-def start_quiz(m):
-    typing(m.chat.id)
-    q1(m.chat.id)
-
-
-# ===== ANSWERS =====
-
-@bot.callback_query_handler(func=lambda call: True)
-def handle(call):
+    kb =
