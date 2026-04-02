@@ -130,4 +130,96 @@ def q1(chat_id):
 
 
 def q2(chat_id):
-    kb =
+    kb = InlineKeyboardMarkup()
+    kb.add(
+        InlineKeyboardButton("A) Charts", callback_data="q2_a"),
+        InlineKeyboardButton("B) Strategy", callback_data="q2_b"),
+        InlineKeyboardButton("C) Emotions", callback_data="q2_c")
+    )
+    bot.send_message(chat_id, "Question 2:\n\nWhat causes most mistakes?", reply_markup=kb)
+
+
+def q3(chat_id):
+    kb = InlineKeyboardMarkup()
+    kb.add(
+        InlineKeyboardButton("A) Random actions", callback_data="q3_a"),
+        InlineKeyboardButton("B) Structured thinking", callback_data="q3_b")
+    )
+    bot.send_message(chat_id, "Question 3:\n\nWhat is better?", reply_markup=kb)
+
+
+@bot.message_handler(func=lambda m: m.text == "🎯 Quick Check")
+def start_quiz(m):
+    typing(m.chat.id)
+    q1(m.chat.id)
+
+
+# ===== ANSWERS =====
+
+@bot.callback_query_handler(func=lambda call: True)
+def handle(call):
+    chat_id = call.message.chat.id
+
+    typing(chat_id)
+
+    if call.data == "q1_b":
+        bot.send_message(chat_id, "✅ Great!! It's Correct Answer")
+        q2(chat_id)
+
+    elif call.data.startswith("q1"):
+        bot.send_message(chat_id, "❌ Correct Answer: B) Observe the market")
+        q2(chat_id)
+
+    elif call.data == "q2_c":
+        bot.send_message(chat_id, "✅ Great!! It's Correct Answer")
+        q3(chat_id)
+
+    elif call.data.startswith("q2"):
+        bot.send_message(chat_id, "❌ Correct Answer: C) Emotions")
+        q3(chat_id)
+
+    elif call.data == "q3_b":
+        bot.send_message(chat_id, "✅ Great!! It's Correct Answer")
+        threading.Thread(target=final_msg, args=(chat_id,)).start()
+
+    elif call.data.startswith("q3"):
+        bot.send_message(chat_id, "❌ Correct Answer: B) Structured thinking")
+        threading.Thread(target=final_msg, args=(chat_id,)).start()
+
+
+# ===== FINAL MESSAGE =====
+
+def final_msg(chat_id):
+    time.sleep(3)
+
+    for _ in range(2):
+        bot.send_chat_action(chat_id, 'typing')
+        time.sleep(1)
+
+    bot.send_message(chat_id, """👉 If you got confused in any answer…
+you should revisit the sections or ask for help 👇
+
+📩 @QXEmpire_Team""")
+
+
+# ===== WEBHOOK =====
+
+@app.route(f"/{TOKEN}", methods=["POST"])
+def webhook():
+    bot.process_new_updates(
+        [telebot.types.Update.de_json(request.stream.read().decode("utf-8"))]
+    )
+    return "ok", 200
+
+
+@app.route("/")
+def home():
+    return "Bot Running"
+
+
+if __name__ == "__main__":
+    bot.remove_webhook()
+    bot.set_webhook(
+        url=os.environ.get("RENDER_EXTERNAL_URL") + "/" + TOKEN
+    )
+    app.run(host="0.0.0.0", port=10000)
