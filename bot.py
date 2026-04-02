@@ -3,7 +3,7 @@ import time
 import telebot
 import threading
 from flask import Flask, request
-from telebot.types import ReplyKeyboardMarkup
+from telebot.types import ReplyKeyboardMarkup, InlineKeyboardMarkup, InlineKeyboardButton
 
 TOKEN = os.environ.get("BOT_TOKEN")
 
@@ -13,7 +13,6 @@ if not TOKEN:
 bot = telebot.TeleBot(TOKEN)
 app = Flask(__name__)
 
-# ===== USER DATA (simple memory) =====
 users = {}
 
 # ===== TEXT =====
@@ -27,92 +26,82 @@ We do not provide financial advice, signals, or guaranteed results.
 By continuing, you confirm that you understand and accept this.
 """
 
-welcome = """This is not a signal service.
+welcome = """Welcome 👋
 
-It’s a learning environment to help you understand markets step by step.
+This is a structured learning space designed to help you understand how trading platforms work — step by step.
 
-Start below.
+No shortcuts. No confusion.
+Just clear thinking and practical understanding.
+
+Follow the sections below in order 👇
 """
 
-market = """📈 Market Structure
+clarity = """🧩 Clarity
 
-Markets move in phases:
+You’ll understand:
+• What price movement represents
+• Why charts behave this way
+• Basic platform understanding
+• Common beginner confusion
 
-• Uptrend
-• Downtrend
-• Range
-
-Recognizing structure avoids random decisions.
+👉 This removes confusion instantly.
 """
 
-psychology = """🧠 Trading Psychology
+observation = """👁 Observation
 
-Most mistakes come from emotions:
+• Identify trends
+• Recognize sideways markets
+• Watch reaction zones
+• Understand behavior
 
-• Fear
-• Overconfidence
-• Impatience
-
-Control emotions = better decisions.
+👉 Don’t predict — observe.
 """
 
-risk = """⚖️ Risk Awareness
+thinking = """🧠 Thinking
 
-• Never over-risk
-• Protect capital
-• Stay disciplined
+• Emotions cause mistakes
+• Slow down decisions
+• Know when to stay out
+• Build consistency
 
-Risk control keeps you alive.
+👉 Thinking is your real edge.
 """
 
-decision = """⚙️ Decision Framework
+learn_more = """🎯 Learn More
 
-Before acting:
+If you’ve completed the steps, you’re ahead of most.
 
-• What is the condition?
-• Is risk defined?
-• Am I following a plan?
-
-Structure reduces mistakes.
-"""
-
-final_text = """You’ve completed the basics.
-
-Most people stop here.
-
-If you want to go deeper:
-
-@your_username
+📩 Continue here: @QXEmpire_Team
 """
 
 # ===== MENU =====
 
 def menu():
     kb = ReplyKeyboardMarkup(resize_keyboard=True)
-    kb.row("📈 Market Structure", "🧠 Trading Psychology")
-    kb.row("⚖️ Risk Awareness", "⚙️ Decision Framework")
+    kb.row("🧩 Step 1: Clarity", "👁 Step 2: Observation")
+    kb.row("🧠 Step 3: Thinking", "🎯 Quick Check")
+    kb.row("💬 Continue")
     return kb
 
 
-# ===== FINAL DELAY MESSAGE =====
+# ===== TYPING EFFECT =====
 
-def send_final(chat_id):
-    time.sleep(15)
-    bot.send_message(chat_id, final_text)
+def typing(chat_id):
+    for _ in range(5):
+        bot.send_chat_action(chat_id, 'typing')
+        time.sleep(1)
 
 
 # ===== START =====
 
 @bot.message_handler(commands=['start'])
 def start(msg):
+    uid = msg.from_user.id
 
-    user_id = msg.from_user.id
-
-    if user_id not in users:
-        users[user_id] = {"steps": set(), "done": False}
+    if uid not in users:
+        users[uid] = {"steps": set(), "quiz": 0}
 
         d = bot.send_message(msg.chat.id, disclaimer)
-
         try:
             bot.pin_chat_message(msg.chat.id, d.message_id)
         except:
@@ -121,41 +110,103 @@ def start(msg):
     bot.send_message(msg.chat.id, welcome, reply_markup=menu())
 
 
-# ===== HANDLER FUNCTION =====
+# ===== STEPS =====
 
-def handle_step(msg, text, step_name):
-    user_id = msg.from_user.id
+@bot.message_handler(func=lambda m: m.text == "🧩 Step 1: Clarity")
+def s1(m):
+    typing(m.chat.id)
+    bot.send_message(m.chat.id, clarity)
 
-    bot.send_message(msg.chat.id, "Thinking...")
-    time.sleep(2)
+@bot.message_handler(func=lambda m: m.text == "👁 Step 2: Observation")
+def s2(m):
+    typing(m.chat.id)
+    bot.send_message(m.chat.id, observation)
 
-    bot.send_message(msg.chat.id, text)
+@bot.message_handler(func=lambda m: m.text == "🧠 Step 3: Thinking")
+def s3(m):
+    typing(m.chat.id)
+    bot.send_message(m.chat.id, thinking)
 
-    users[user_id]["steps"].add(step_name)
-
-    # Check completion
-    if len(users[user_id]["steps"]) == 4 and not users[user_id]["done"]:
-        users[user_id]["done"] = True
-        threading.Thread(target=send_final, args=(msg.chat.id,)).start()
+@bot.message_handler(func=lambda m: m.text == "💬 Continue")
+def s4(m):
+    typing(m.chat.id)
+    bot.send_message(m.chat.id, learn_more)
 
 
-# ===== BUTTONS =====
+# ===== QUIZ SYSTEM =====
 
-@bot.message_handler(func=lambda m: m.text == "📈 Market Structure")
-def b1(m):
-    handle_step(m, market, "market")
+def q1(chat_id):
+    kb = InlineKeyboardMarkup()
+    kb.add(
+        InlineKeyboardButton("A) Act fast", callback_data="q1_a"),
+        InlineKeyboardButton("B) Observe the market", callback_data="q1_b"),
+        InlineKeyboardButton("C) Follow others", callback_data="q1_c")
+    )
+    bot.send_message(chat_id, "Question 1:\n\nWhat is the first step before making any decision?", reply_markup=kb)
 
-@bot.message_handler(func=lambda m: m.text == "🧠 Trading Psychology")
-def b2(m):
-    handle_step(m, psychology, "psychology")
+def q2(chat_id):
+    kb = InlineKeyboardMarkup()
+    kb.add(
+        InlineKeyboardButton("A) Charts", callback_data="q2_a"),
+        InlineKeyboardButton("B) Strategy", callback_data="q2_b"),
+        InlineKeyboardButton("C) Emotions", callback_data="q2_c")
+    )
+    bot.send_message(chat_id, "Question 2:\n\nWhat causes most mistakes?", reply_markup=kb)
 
-@bot.message_handler(func=lambda m: m.text == "⚖️ Risk Awareness")
-def b3(m):
-    handle_step(m, risk, "risk")
+def q3(chat_id):
+    kb = InlineKeyboardMarkup()
+    kb.add(
+        InlineKeyboardButton("A) Random actions", callback_data="q3_a"),
+        InlineKeyboardButton("B) Structured thinking", callback_data="q3_b")
+    )
+    bot.send_message(chat_id, "Question 3:\n\nWhat is better?", reply_markup=kb)
 
-@bot.message_handler(func=lambda m: m.text == "⚙️ Decision Framework")
-def b4(m):
-    handle_step(m, decision, "decision")
+
+@bot.message_handler(func=lambda m: m.text == "🎯 Quick Check")
+def start_quiz(m):
+    users[m.from_user.id]["quiz"] = 1
+    typing(m.chat.id)
+    q1(m.chat.id)
+
+
+# ===== ANSWERS =====
+
+@bot.callback_query_handler(func=lambda call: True)
+def handle(call):
+    uid = call.from_user.id
+
+    typing(call.message.chat.id)
+
+    if call.data == "q1_b":
+        bot.send_message(call.message.chat.id, "✅ Great! Correct Answer")
+        q2(call.message.chat.id)
+    elif call.data.startswith("q1"):
+        bot.send_message(call.message.chat.id, "❌ Correct Answer: B) Observe the market")
+        q2(call.message.chat.id)
+
+    elif call.data == "q2_c":
+        bot.send_message(call.message.chat.id, "✅ Great! Correct Answer")
+        q3(call.message.chat.id)
+    elif call.data.startswith("q2"):
+        bot.send_message(call.message.chat.id, "❌ Correct Answer: C) Emotions")
+        q3(call.message.chat.id)
+
+    elif call.data == "q3_b":
+        bot.send_message(call.message.chat.id, "✅ Great! Correct Answer")
+        threading.Thread(target=final_msg, args=(call.message.chat.id,)).start()
+    elif call.data.startswith("q3"):
+        bot.send_message(call.message.chat.id, "❌ Correct Answer: B) Structured thinking")
+        threading.Thread(target=final_msg, args=(call.message.chat.id,)).start()
+
+
+# ===== FINAL MESSAGE =====
+
+def final_msg(chat_id):
+    time.sleep(15)
+    bot.send_message(chat_id, """👉 If you got confused in any answer…
+you should revisit the sections or ask for help 👇
+
+📩 @QXEmpire_Team""")
 
 
 # ===== WEBHOOK =====
