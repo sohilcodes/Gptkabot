@@ -14,8 +14,8 @@ bot = telebot.TeleBot(TOKEN)
 app = Flask(__name__)
 
 users = {}
-
 CHANNEL = "@task25rs"
+
 
 # ===== TEXT =====
 
@@ -45,6 +45,7 @@ If you’ve completed the steps, you’re ahead of most.
 📩 Continue here: @QXEmpire_Team
 """
 
+
 # ===== MENU =====
 
 def menu():
@@ -55,12 +56,21 @@ def menu():
     return kb
 
 
-# ===== TYPING EFFECT =====
+# ===== TYPING =====
 
 def typing(chat_id):
     for _ in range(5):
         bot.send_chat_action(chat_id, 'typing')
         time.sleep(1)
+
+
+# ===== SAFE SEND (IMAGE + CAPTION FIX) =====
+
+def send_post(chat_id, post_id):
+    try:
+        bot.copy_message(chat_id, CHANNEL, post_id)
+    except:
+        bot.forward_message(chat_id, CHANNEL, post_id)
 
 
 # ===== START =====
@@ -70,7 +80,7 @@ def start(msg):
     uid = msg.from_user.id
 
     if uid not in users:
-        users[uid] = {"quiz": 0}
+        users[uid] = {}
 
         d = bot.send_message(msg.chat.id, disclaimer)
         try:
@@ -81,22 +91,22 @@ def start(msg):
     bot.send_message(msg.chat.id, welcome, reply_markup=menu())
 
 
-# ===== STEPS (CHANNEL CONTENT) =====
+# ===== STEPS =====
 
 @bot.message_handler(func=lambda m: m.text == "🧩 Step 1: Clarity")
 def s1(m):
     typing(m.chat.id)
-    bot.copy_message(m.chat.id, CHANNEL, 79)
+    send_post(m.chat.id, 79)
 
 @bot.message_handler(func=lambda m: m.text == "👁 Step 2: Observation")
 def s2(m):
     typing(m.chat.id)
-    bot.copy_message(m.chat.id, CHANNEL, 78)
+    send_post(m.chat.id, 78)
 
 @bot.message_handler(func=lambda m: m.text == "🧠 Step 3: Thinking")
 def s3(m):
     typing(m.chat.id)
-    bot.copy_message(m.chat.id, CHANNEL, 77)
+    send_post(m.chat.id, 77)
 
 @bot.message_handler(func=lambda m: m.text == "💬 Continue")
 def s4(m):
@@ -143,64 +153,3 @@ def start_quiz(m):
 
 @bot.callback_query_handler(func=lambda call: True)
 def handle(call):
-
-    typing(call.message.chat.id)
-
-    if call.data == "q1_b":
-        bot.send_message(call.message.chat.id, "✅ Great!! It's Correct Answer")
-        q2(call.message.chat.id)
-    elif call.data.startswith("q1"):
-        bot.send_message(call.message.chat.id, "❌ Correct Answer: B) Observe the market")
-        q2(call.message.chat.id)
-
-    elif call.data == "q2_c":
-        bot.send_message(call.message.chat.id, "✅ Great!! It's Correct Answer")
-        q3(call.message.chat.id)
-    elif call.data.startswith("q2"):
-        bot.send_message(call.message.chat.id, "❌ Correct Answer: C) Emotions")
-        q3(call.message.chat.id)
-
-    elif call.data == "q3_b":
-        bot.send_message(call.message.chat.id, "✅ Great!! It's Correct Answer")
-        threading.Thread(target=final_msg, args=(call.message.chat.id,)).start()
-    elif call.data.startswith("q3"):
-        bot.send_message(call.message.chat.id, "❌ Correct Answer: B) Structured thinking")
-        threading.Thread(target=final_msg, args=(call.message.chat.id,)).start()
-
-
-# ===== FINAL MESSAGE (3 sec delay) =====
-
-def final_msg(chat_id):
-    time.sleep(3)
-
-    for _ in range(2):
-        bot.send_chat_action(chat_id, 'typing')
-        time.sleep(1)
-
-    bot.send_message(chat_id, """👉 If you got confused in any answer…
-you should revisit the sections or ask for help 👇
-
-📩 @QXEmpire_Team""")
-
-
-# ===== WEBHOOK =====
-
-@app.route(f"/{TOKEN}", methods=["POST"])
-def webhook():
-    bot.process_new_updates(
-        [telebot.types.Update.de_json(request.stream.read().decode("utf-8"))]
-    )
-    return "ok", 200
-
-
-@app.route("/")
-def home():
-    return "Bot Running"
-
-
-if __name__ == "__main__":
-    bot.remove_webhook()
-    bot.set_webhook(
-        url=os.environ.get("RENDER_EXTERNAL_URL") + "/" + TOKEN
-    )
-    app.run(host="0.0.0.0", port=10000)
