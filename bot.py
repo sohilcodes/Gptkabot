@@ -202,7 +202,13 @@ def handle(call):
 # ===== FINAL MESSAGE =====
 
 def final_msg(chat_id):
-    time.sleep(15)
+    time.sleep(3)
+
+    # typing feel before final msg
+    for _ in range(2):
+        bot.send_chat_action(chat_id, 'typing')
+        time.sleep(1)
+
     bot.send_message(chat_id, """👉 If you got confused in any answer…
 you should revisit the sections or ask for help 👇
 
