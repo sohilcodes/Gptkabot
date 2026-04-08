@@ -224,57 +224,117 @@ def support(m):
 def q1(chat_id):
     kb = InlineKeyboardMarkup()
     kb.add(
-        InlineKeyboardButton("A) Act fast", callback_data="q1_a"),
-        InlineKeyboardButton("B) Observe the market", callback_data="q1_b"),
-        InlineKeyboardButton("C) Follow others", callback_data="q1_c")
+        InlineKeyboardButton("A) To act quickly without thinking", callback_data="q1_a"),
+        InlineKeyboardButton("B) To understand before taking action", callback_data="q1_b"),
+        InlineKeyboardButton("C) To follow others blindly", callback_data="q1_c")
     )
-    bot.send_message(chat_id, "Question 1:\n\nWhat is the first step?", reply_markup=kb)
+    bot.send_message(chat_id,
+"""🧪 Quick Check – Question 1
+
+What is the purpose of clarity in market learning?
+
+👉 Select your answer below:""", reply_markup=kb)
+
 
 def q2(chat_id):
     kb = InlineKeyboardMarkup()
     kb.add(
-        InlineKeyboardButton("A) Charts", callback_data="q2_a"),
-        InlineKeyboardButton("B) Strategy", callback_data="q2_b"),
-        InlineKeyboardButton("C) Emotions", callback_data="q2_c")
+        InlineKeyboardButton("A) It helps you react instantly", callback_data="q2_a"),
+        InlineKeyboardButton("B) It helps you understand patterns and behavior", callback_data="q2_b"),
+        InlineKeyboardButton("C) It guarantees outcomes", callback_data="q2_c")
     )
-    bot.send_message(chat_id, "Question 2:\n\nWhat causes most mistakes?", reply_markup=kb)
+    bot.send_message(chat_id,
+"""🧪 Quick Check – Question 2
+
+Why is observation important?
+
+👉 Select your answer below:""", reply_markup=kb)
+
 
 def q3(chat_id):
     kb = InlineKeyboardMarkup()
     kb.add(
-        InlineKeyboardButton("A) Random actions", callback_data="q3_a"),
-        InlineKeyboardButton("B) Structured thinking", callback_data="q3_b")
+        InlineKeyboardButton("A) Make emotional decisions", callback_data="q3_a"),
+        InlineKeyboardButton("B) Avoid planning", callback_data="q3_b"),
+        InlineKeyboardButton("C) Analyze situations before acting", callback_data="q3_c")
     )
-    bot.send_message(chat_id, "Question 3:\n\nWhat is better?", reply_markup=kb)
+    bot.send_message(chat_id,
+"""🧪 Quick Check – Question 3
+
+What does structured thinking help you do?
+
+👉 Select your answer below:""", reply_markup=kb)
+
 
 @bot.message_handler(func=lambda m: m.text == "🎯 Quick Check")
 def start_quiz(m):
-    typing(m.chat.id)
     q1(m.chat.id)
+
 
 @bot.callback_query_handler(func=lambda call: True)
 def handle(call):
     chat_id = call.message.chat.id
 
-    if call.data == "q1_b":
-        bot.send_message(chat_id, "✅ Correct")
-        q2(chat_id)
-    else:
-        bot.send_message(chat_id, "❌ Correct Answer: Observe the market")
+    # Q1
+    if call.data.startswith("q1"):
+        if call.data == "q1_b":
+            bot.send_message(chat_id,
+"""✅ Correct!
+
+Clarity helps you understand before acting.
+
+👉 Next question:""")
+        else:
+            bot.send_message(chat_id,
+"""❌ Not quite.
+
+Clarity is about understanding before taking action.
+
+👉 Next question:""")
         q2(chat_id)
 
-    if call.data == "q2_c":
-        bot.send_message(chat_id, "✅ Correct")
-        q3(chat_id)
+    # Q2
     elif call.data.startswith("q2"):
-        bot.send_message(chat_id, "❌ Correct Answer: Emotions")
+        if call.data == "q2_b":
+            bot.send_message(chat_id,
+"""✅ Correct!
+
+Observation helps understand patterns.
+
+👉 Next question:""")
+        else:
+            bot.send_message(chat_id,
+"""❌ Not exactly.
+
+Observation is about understanding patterns.
+
+👉 Final question:""")
         q3(chat_id)
 
-    if call.data == "q3_b":
-        bot.send_message(chat_id, "✅ Correct")
+    # Q3
     elif call.data.startswith("q3"):
-        bot.send_message(chat_id, "❌ Correct Answer: Structured thinking")
+        if call.data == "q3_c":
+            bot.send_message(chat_id,
+"""✅ Correct!
 
+Structured thinking helps analyze before acting.
+
+🎉 You’ve completed the Quick Check!""")
+        else:
+            bot.send_message(chat_id,
+"""❌ Not correct.
+
+Thinking is about analyzing before acting.
+
+🎉 You’ve completed the Quick Check!""")
+
+        bot.send_message(chat_id,
+"""You’ve completed this section. Reviewing questions like this helps improve understanding and builds stronger learning habits over time.
+
+⚠️ This content is for educational purposes only.  
+These are projections and not guarantees.
+
+👉 To continue learning, explore the FAQ section.""")
 # ===== WEBHOOK =====
 
 @app.route(f"/{TOKEN}", methods=["POST"])
