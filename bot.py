@@ -44,10 +44,100 @@ These are projections and not guarantees.
 👇 Choose a section below to begin.
 """
 
-clarity_text = "🧠 Clarity content..."  # your clarity_text
-observation_text = "👀 Observation content..."  # your observation_text
-thinking_text = "💭 Thinking content..."  # your thinking_text
-faq_text = "FAQ content..."
+clarity_text = """🧠 Clarity
+
+Clarity in market learning means having a clear understanding of what is happening and why, instead of reacting to movements without thinking. Many beginners struggle not because markets are complex, but because they try to act without fully understanding the situation.
+
+In simple terms, clarity is the ability to slow down and see the market for what it is, rather than what you expect it to be.
+
+Before taking any action, take a moment to ask yourself:
+• What is the price actually doing right now?  
+• Am I following a structured and logical approach?  
+• Is this decision based on observation or emotion?  
+
+📍 Example:
+Imagine you see price suddenly moving upward quickly. Without clarity, a person may react instantly out of excitement or fear of missing out. With clarity, you pause, observe the movement, and try to understand whether this move is stable or temporary. This simple pause can prevent unnecessary mistakes.
+
+Clarity is built over time through observation, patience, and consistent learning. It helps you avoid confusion, reduce emotional reactions, and develop a more disciplined approach to understanding markets.
+
+⚠️ This content is for educational purposes only.  
+These are projections and not guarantees.
+
+👉 To continue learning, explore the Observation section."""  # your clarity_text
+observation_text = """👀 Observation
+
+Observation is the skill of carefully watching how the market behaves without rushing to take action. It is not just about looking at the chart, but about understanding what the movement is trying to show over time.
+
+Many beginners try to act too quickly, but strong learning comes from watching first and acting later.
+
+When observing, focus on:
+• How price moves - fast, slow, or sideways  
+• The direction - is it forming an uptrend, downtrend, or no clear trend?  
+• Key areas - where price slows down, stops, or changes direction  
+
+📍 Example:
+Imagine price is moving upward, but suddenly it starts slowing down near a certain level. Instead of reacting immediately, observation helps you notice that the market is losing momentum. This gives you a better understanding of what might happen next, rather than guessing.
+
+Observation is about patience. The more time you spend watching patterns and behavior, the more familiar the market becomes. Over time, this reduces confusion and helps you make more structured and thoughtful decisions.
+
+Strong observation builds the foundation for clarity and better thinking.
+
+⚠️ This content is for educational purposes only.  
+These are projections and not guarantees.
+
+👉 To continue learning, explore the Thinking section."""  # your observation_text
+thinking_text = """💭 Thinking
+
+Thinking in market learning means taking time to understand a situation before acting, instead of reacting instantly. It is the process of analyzing what you see, questioning your decision, and making a calm and structured choice.
+
+Many beginners act quickly based on emotions like excitement, fear, or urgency. Strong thinking helps you slow down and stay in control.
+
+Before making any decision, train yourself to ask:
+• What is the reason behind this action?  
+• What are the possible outcomes?  
+• Am I prepared for both positive and negative situations?  
+
+📍 Example:
+Imagine you notice price moving quickly in one direction. Without thinking, a person may react immediately. With proper thinking, you pause and consider: Is this movement stable? Has this happened before? What could happen next? This process reduces unnecessary mistakes.
+
+Thinking also includes planning ahead:
+• Understanding your limits  
+• Being aware of uncertainty  
+• Accepting that not every situation is clear  
+
+Over time, structured thinking helps you become more patient, more disciplined, and less influenced by emotions. It turns reactions into decisions.
+
+⚠️ This content is for educational purposes only.  
+These are projections and not guarantees.
+
+👉 To continue learning, explore the Quick Check section."""  # your thinking_text
+faq_text = """The FAQ section answers common beginner questions to help you better understand the purpose and limitations of this educational bot.
+
+1. What is this bot about?  
+This bot provides basic educational content to help you understand how markets work step by step.
+
+2. Is this financial advice?  
+No. This content is only for educational purposes and does not provide any advice.
+
+3. Can I make money using this bot?  
+There is no guarantee of outcomes. The goal is learning, not results.
+
+4. Do I need prior experience?  
+No. The content is designed for complete beginners.
+
+5. Does this bot provide signals or predictions?  
+No. It focuses only on explaining concepts and building understanding.
+
+6. How should I use this bot?  
+Follow the lessons step by step and take time to understand each concept.
+
+7. Is there any cost?  
+Basic learning content is provided for educational use.
+
+This section helps set clear expectations and improves your learning experience.
+
+⚠️ This content is for educational purposes only.  
+“These are projections and not guarantees.”"""
 support_text = "Support content..."
 
 # ===== IMAGE LINKS =====
@@ -60,7 +150,7 @@ def menu():
     kb = ReplyKeyboardMarkup(resize_keyboard=True)
     kb.row("🧩 Step 1: Clarity", "👁 Step 2: Observation")
     kb.row("🧠 Step 3: Thinking", "🎯 Quick Check")
-    kb.row("❓ FAQ", "📩 Support")
+    kb.row("❓ FAQ")
     return kb
 
 # ===== START =====
