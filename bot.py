@@ -1,7 +1,5 @@
 import os
-import time
 import telebot
-import threading
 from flask import Flask, request
 from telebot.types import ReplyKeyboardMarkup, InlineKeyboardMarkup, InlineKeyboardButton
 
@@ -148,6 +146,18 @@ This section helps set clear expectations and improves your learning experience.
 “These are projections and not guarantees.”
 """
 
+support_text = """📩 Support
+
+If you have questions, explore lessons and FAQ first.
+
+This bot is for structured self-learning.
+
+⚠️ Disclaimer:
+We do not provide personal trading advice.
+
+“These are projections and not guarantees.”
+"""
+
 # ===== IMAGE LINKS =====
 CLARITY_IMG = "https://t.me/task25rs/79"
 OBSERVATION_IMG = "https://t.me/task25rs/78"
@@ -162,13 +172,6 @@ def menu():
     kb.row("❓ FAQ", "📩 Support")
     return kb
 
-# ===== TYPING =====
-
-def typing(chat_id):
-    for _ in range(3):
-        bot.send_chat_action(chat_id, 'typing')
-        time.sleep(1)
-
 # ===== START =====
 
 @bot.message_handler(commands=['start'])
@@ -177,9 +180,7 @@ def start(msg):
 
     if uid not in users:
         users[uid] = {}
-
         bot.send_message(ADMIN_ID, f"🆕 New User\nID: {uid}\nName: {msg.from_user.first_name}")
-
         d = bot.send_message(msg.chat.id, disclaimer)
         try:
             bot.pin_chat_message(msg.chat.id, d.message_id)
@@ -192,31 +193,26 @@ def start(msg):
 
 @bot.message_handler(func=lambda m: m.text == "🧩 Step 1: Clarity")
 def step1(m):
-    typing(m.chat.id)
     bot.send_photo(m.chat.id, CLARITY_IMG, caption=clarity_text)
 
 @bot.message_handler(func=lambda m: m.text == "👁 Step 2: Observation")
 def step2(m):
-    typing(m.chat.id)
     bot.send_photo(m.chat.id, OBSERVATION_IMG, caption=observation_text)
 
 @bot.message_handler(func=lambda m: m.text == "🧠 Step 3: Thinking")
 def step3(m):
-    typing(m.chat.id)
     bot.send_photo(m.chat.id, THINKING_IMG, caption=thinking_text)
 
 # ===== FAQ =====
 
 @bot.message_handler(func=lambda m: m.text == "❓ FAQ")
 def faq(m):
-    typing(m.chat.id)
     bot.send_message(m.chat.id, faq_text)
 
 # ===== SUPPORT =====
 
 @bot.message_handler(func=lambda m: m.text == "📩 Support")
 def support(m):
-    typing(m.chat.id)
     bot.send_message(m.chat.id, support_text)
 
 # ===== QUIZ =====
@@ -235,7 +231,6 @@ What is the purpose of clarity in market learning?
 
 👉 Select your answer below:""", reply_markup=kb)
 
-
 def q2(chat_id):
     kb = InlineKeyboardMarkup()
     kb.add(
@@ -249,7 +244,6 @@ def q2(chat_id):
 Why is observation important?
 
 👉 Select your answer below:""", reply_markup=kb)
-
 
 def q3(chat_id):
     kb = InlineKeyboardMarkup()
@@ -265,69 +259,68 @@ What does structured thinking help you do?
 
 👉 Select your answer below:""", reply_markup=kb)
 
-
 @bot.message_handler(func=lambda m: m.text == "🎯 Quick Check")
 def start_quiz(m):
     q1(m.chat.id)
-
 
 @bot.callback_query_handler(func=lambda call: True)
 def handle(call):
     chat_id = call.message.chat.id
 
-    # Q1
+    # ===== Question 1 =====
     if call.data.startswith("q1"):
         if call.data == "q1_b":
             bot.send_message(chat_id,
 """✅ Correct!
 
-Clarity helps you understand before acting.
+Clarity helps you understand the situation before acting, which reduces confusion and mistakes.
 
 👉 Next question:""")
         else:
             bot.send_message(chat_id,
 """❌ Not quite.
 
-Clarity is about understanding before taking action.
+Clarity is about understanding before taking action, not reacting quickly.
 
-👉 Next question:""")
+👉 Let’s move to the next question:""")
         q2(chat_id)
 
-    # Q2
+    # ===== Question 2 =====
     elif call.data.startswith("q2"):
         if call.data == "q2_b":
             bot.send_message(chat_id,
 """✅ Correct!
 
-Observation helps understand patterns.
+Observation helps you recognize patterns and understand how the market behaves over time.
 
 👉 Next question:""")
         else:
             bot.send_message(chat_id,
 """❌ Not exactly.
 
-Observation is about understanding patterns.
+Observation is about understanding patterns, not reacting instantly or expecting guarantees.
 
 👉 Final question:""")
         q3(chat_id)
 
-    # Q3
+    # ===== Question 3 =====
     elif call.data.startswith("q3"):
         if call.data == "q3_c":
             bot.send_message(chat_id,
 """✅ Correct!
 
-Structured thinking helps analyze before acting.
+Structured thinking helps you analyze situations calmly before making decisions.
 
 🎉 You’ve completed the Quick Check!""")
         else:
             bot.send_message(chat_id,
 """❌ Not correct.
 
-Thinking is about analyzing before acting.
+Thinking is about analyzing before acting, not reacting emotionally.
 
 🎉 You’ve completed the Quick Check!""")
 
+        # ===== Final summary =====
         bot.send_message(chat_id,
 """You’ve completed this section. Reviewing questions like this helps improve understanding and builds stronger learning habits over time.
 
@@ -335,6 +328,7 @@ Thinking is about analyzing before acting.
 These are projections and not guarantees.
 
 👉 To continue learning, explore the FAQ section.""")
+
 # ===== WEBHOOK =====
 
 @app.route(f"/{TOKEN}", methods=["POST"])
