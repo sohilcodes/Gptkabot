@@ -44,7 +44,7 @@ These are projections and not guarantees.
 👇 Choose a section below to begin.
 """
 
-🧩 Step 1: Clarity = """🧠 Clarity
+clarity_text = """🧠 Clarity
 
 Clarity in market learning means having a clear understanding of what is happening and why, instead of reacting to movements without thinking. Many beginners struggle not because markets are complex, but because they try to act without fully understanding the situation.
 
@@ -164,20 +164,17 @@ OBSERVATION_IMG = "https://t.me/task25rs/78"
 THINKING_IMG = "https://t.me/task25rs/77"
 
 # ===== MENU =====
-
 def menu():
     kb = ReplyKeyboardMarkup(resize_keyboard=True)
     kb.row("🧩 Step 1: Clarity", "👁 Step 2: Observation")
     kb.row("🧠 Step 3: Thinking", "🎯 Quick Check")
-    kb.row("❓ FAQ")
+    kb.row("❓ FAQ", "📩 Support")
     return kb
 
 # ===== START =====
-
 @bot.message_handler(commands=['start'])
 def start(msg):
     uid = msg.from_user.id
-
     if uid not in users:
         users[uid] = {}
         bot.send_message(ADMIN_ID, f"🆕 New User\nID: {uid}\nName: {msg.from_user.first_name}")
@@ -186,11 +183,9 @@ def start(msg):
             bot.pin_chat_message(msg.chat.id, d.message_id)
         except:
             pass
-
     bot.send_message(msg.chat.id, welcome, reply_markup=menu())
 
-# ===== STEPS =====
-
+# ===== STEPS HANDLERS =====
 @bot.message_handler(func=lambda m: "Step 1" in m.text)
 def step1(m):
     bot.send_photo(m.chat.id, CLARITY_IMG, caption=clarity_text)
@@ -202,20 +197,18 @@ def step2(m):
 @bot.message_handler(func=lambda m: "Step 3" in m.text)
 def step3(m):
     bot.send_photo(m.chat.id, THINKING_IMG, caption=thinking_text)
-# ===== FAQ =====
 
-@bot.message_handler(func=lambda m: m.text == "❓ FAQ")
+# ===== FAQ =====
+@bot.message_handler(func=lambda m: "FAQ" in m.text)
 def faq(m):
     bot.send_message(m.chat.id, faq_text)
 
 # ===== SUPPORT =====
-
-@bot.message_handler(func=lambda m: m.text == "📩 Support")
+@bot.message_handler(func=lambda m: "Support" in m.text)
 def support(m):
     bot.send_message(m.chat.id, support_text)
 
 # ===== QUIZ =====
-
 def q1(chat_id):
     kb = InlineKeyboardMarkup()
     kb.add(
@@ -258,7 +251,7 @@ What does structured thinking help you do?
 
 👉 Select your answer below:""", reply_markup=kb)
 
-@bot.message_handler(func=lambda m: m.text == "🎯 Quick Check")
+@bot.message_handler(func=lambda m: "Quick Check" in m.text)
 def start_quiz(m):
     q1(m.chat.id)
 
@@ -266,7 +259,7 @@ def start_quiz(m):
 def handle(call):
     chat_id = call.message.chat.id
 
-    # ===== Question 1 =====
+    # Question 1
     if call.data.startswith("q1"):
         if call.data == "q1_b":
             bot.send_message(chat_id,
@@ -284,7 +277,7 @@ Clarity is about understanding before taking action, not reacting quickly.
 👉 Let’s move to the next question:""")
         q2(chat_id)
 
-    # ===== Question 2 =====
+    # Question 2
     elif call.data.startswith("q2"):
         if call.data == "q2_b":
             bot.send_message(chat_id,
@@ -302,7 +295,7 @@ Observation is about understanding patterns, not reacting instantly or expecting
 👉 Final question:""")
         q3(chat_id)
 
-    # ===== Question 3 =====
+    # Question 3
     elif call.data.startswith("q3"):
         if call.data == "q3_c":
             bot.send_message(chat_id,
@@ -319,7 +312,6 @@ Thinking is about analyzing before acting, not reacting emotionally.
 
 🎉 You’ve completed the Quick Check!""")
 
-        # ===== Final summary =====
         bot.send_message(chat_id,
 """You’ve completed this section. Reviewing questions like this helps improve understanding and builds stronger learning habits over time.
 
@@ -329,7 +321,6 @@ These are projections and not guarantees.
 👉 To continue learning, explore the FAQ section.""")
 
 # ===== WEBHOOK =====
-
 @app.route(f"/{TOKEN}", methods=["POST"])
 def webhook():
     bot.process_new_updates(
