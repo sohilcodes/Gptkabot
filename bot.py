@@ -225,7 +225,7 @@ def q3(chat_id):
         InlineKeyboardButton("C)", callback_data="q3_c")
     )
     bot.send_message(chat_id,
-        "🧪 Quick Check – Question 3\nWhat does structured thinking help you do?\n👉 Select your answer below:",
+        "🧪 Quick Check – Question 3\n\nWhat does structured thinking help you do?\n\nA) Make emotional decisions\nB) Avoid planning\nC) Analyze situations before acting\n\n👉 Select your answer below:",
         reply_markup=kb
     )
 
