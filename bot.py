@@ -201,7 +201,7 @@ def q1(chat_id):
         InlineKeyboardButton("C)", callback_data="q1_c")
     )
     bot.send_message(chat_id,
-        "🧪 Quick Check – Question 1\nWhat is the purpose of clarity in market learning?\nA) To act quickly without thinking\nB) To understand before taking action\nC) To follow others blindly,\n👉 Select your answer below:",
+        "🧪 Quick Check – Question 1\n\nWhat is the purpose of clarity in market learning?\n\nA) To act quickly without thinking\nB) To understand before taking action\nC) To follow others blindly,\n\n👉 Select your answer below:",
         reply_markup=kb
     )
 
@@ -241,21 +241,21 @@ def handle(call):
         if call.data == "q1_b":
             bot.send_message(chat_id, "✅ Correct! Clarity helps you understand the situation before acting, which reduces confusion and mistakes. 👉 Next question:")
         else:
-            bot.send_message(chat_id, "❌ Not correct. Thinking is about analyzing before acting, not reacting emotionally. 🎉 You’ve completed the Quick Check!")
+            bot.send_message(chat_id, "❌ Not quite.\n\nClarity is about understanding before taking action, not reacting quickly.\n\n👉 Let’s move to the next question:")
         q2(chat_id)
 
     elif call.data.startswith("q2"):
         if call.data == "q2_b":
-            bot.send_message(chat_id, "✅ Correct! Clarity helps you understand the situation before acting, which reduces confusion and mistakes. 👉 Next question:")
+            bot.send_message(chat_id, "✅ Correct!\n\nObservation helps you recognize patterns and understand how the market behaves over time.\n\n👉 Next question:")
         else:
-            bot.send_message(chat_id, "❌ Not correct. Thinking is about analyzing before acting, not reacting emotionally. 🎉 You’ve completed the Quick Check!")
+            bot.send_message(chat_id, "❌ Not exactly.\n\nObservation is about understanding patterns, not reacting instantly or expecting guarantees.\n\n👉 Final question:")
         q3(chat_id)
 
     elif call.data.startswith("q3"):
         if call.data == "q3_c":
-            bot.send_message(chat_id, "✅ Correct! Clarity helps you understand the situation before acting, which reduces confusion and mistakes. 👉 Next question:")
+            bot.send_message(chat_id, "✅ Correct!\n\nStructured thinking helps you analyze situations calmly before making decisions.\n\n🎉 You’ve completed the Quick Check!")
         else:
-            bot.send_message(chat_id, "❌ Not correct. Thinking is about analyzing before acting, not reacting emotionally. 🎉 You’ve completed the Quick Check!")
+            bot.send_message(chat_id, "❌ Not correct.\n\nThinking is about analyzing before acting, not reacting emotionally.\n\n🎉 You’ve completed the Quick Check!")
         bot.send_message(chat_id, "You’ve completed this section. Reviewing questions like this helps improve understanding and builds stronger learning habits over time.\n⚠️ This content is for educational purposes only.\nThese are projections and not guarantees.,\n👉 To continue learning, explore the FAQ section.")
 
 # ===== WEBHOOK =====
