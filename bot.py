@@ -196,9 +196,9 @@ def support(m):
 def q1(chat_id):
     kb = InlineKeyboardMarkup()
     kb.row(
-        InlineKeyboardButton("A) To act quickly without thinking", callback_data="q1_a"),
-        InlineKeyboardButton("B) To understand before taking action", callback_data="q1_b"),
-        InlineKeyboardButton("C) To follow others blindly", callback_data="q1_c")
+        InlineKeyboardButton("A)", callback_data="q1_a"),
+        InlineKeyboardButton("B)", callback_data="q1_b"),
+        InlineKeyboardButton("C)", callback_data="q1_c")
     )
     bot.send_message(chat_id,
         "🧪 Quick Check – Question 1\nWhat is the purpose of clarity in market learning?\n👉 Select your answer below:",
@@ -209,7 +209,7 @@ def q2(chat_id):
     kb = InlineKeyboardMarkup()
     kb.row(
         InlineKeyboardButton("A) React instantly", callback_data="q2_a"),
-        InlineKeyboardButton("B) Understand patterns & behavior", callback_data="q2_b"),
+        InlineKeyboardButton("B)", callback_data="q2_b"),
         InlineKeyboardButton("C) Guarantees outcomes", callback_data="q2_c")
     )
     bot.send_message(chat_id,
