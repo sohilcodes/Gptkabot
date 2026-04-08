@@ -201,7 +201,7 @@ def q1(chat_id):
         InlineKeyboardButton("C)", callback_data="q1_c")
     )
     bot.send_message(chat_id,
-        "🧪 Quick Check – Question 1\nWhat is the purpose of clarity in market learning?\n👉 Select your answer below:",
+        "🧪 Quick Check – Question 1\nWhat is the purpose of clarity in market learning?\nA) To act quickly without thinking\nB) To understand before taking action\nC) To follow others blindly,\n👉 Select your answer below:",
         reply_markup=kb
     )
 
