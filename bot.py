@@ -44,7 +44,7 @@ These are projections and not guarantees.
 👇 Choose a section below to begin.
 """
 
-clarity_text = """🧠 Clarity
+🧩 Step 1: Clarity = """🧠 Clarity
 
 Clarity in market learning means having a clear understanding of what is happening and why, instead of reacting to movements without thinking. Many beginners struggle not because markets are complex, but because they try to act without fully understanding the situation.
 
@@ -191,18 +191,17 @@ def start(msg):
 
 # ===== STEPS =====
 
-@bot.message_handler(func=lambda m: m.text == "🧩 Step 1: Clarity")
+@bot.message_handler(func=lambda m: "Step 1" in m.text)
 def step1(m):
     bot.send_photo(m.chat.id, CLARITY_IMG, caption=clarity_text)
 
-@bot.message_handler(func=lambda m: m.text == "👁 Step 2: Observation")
+@bot.message_handler(func=lambda m: "Step 2" in m.text)
 def step2(m):
     bot.send_photo(m.chat.id, OBSERVATION_IMG, caption=observation_text)
 
-@bot.message_handler(func=lambda m: m.text == "🧠 Step 3: Thinking")
+@bot.message_handler(func=lambda m: "Step 3" in m.text)
 def step3(m):
     bot.send_photo(m.chat.id, THINKING_IMG, caption=thinking_text)
-
 # ===== FAQ =====
 
 @bot.message_handler(func=lambda m: m.text == "❓ FAQ")
