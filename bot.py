@@ -239,24 +239,24 @@ def handle(call):
     chat_id = call.message.chat.id
     if call.data.startswith("q1"):
         if call.data == "q1_b":
-            bot.send_message(chat_id, "✅ Correct! Clarity helps you understand before acting.\n👉 Next question:")
+            bot.send_message(chat_id, "✅ Correct! Clarity helps you understand the situation before acting, which reduces confusion and mistakes. 👉 Next question:")
         else:
-            bot.send_message(chat_id, "❌ Not quite. Clarity is about understanding before action.\n👉 Next question:")
+            bot.send_message(chat_id, "❌ Not correct. Thinking is about analyzing before acting, not reacting emotionally. 🎉 You’ve completed the Quick Check!")
         q2(chat_id)
 
     elif call.data.startswith("q2"):
         if call.data == "q2_b":
-            bot.send_message(chat_id, "✅ Correct! Observation helps recognize patterns over time.\n👉 Next question:")
+            bot.send_message(chat_id, "✅ Correct! Clarity helps you understand the situation before acting, which reduces confusion and mistakes. 👉 Next question:")
         else:
-            bot.send_message(chat_id, "❌ Not exactly. Observation is about understanding patterns.\n👉 Final question:")
+            bot.send_message(chat_id, "❌ Not correct. Thinking is about analyzing before acting, not reacting emotionally. 🎉 You’ve completed the Quick Check!")
         q3(chat_id)
 
     elif call.data.startswith("q3"):
         if call.data == "q3_c":
-            bot.send_message(chat_id, "✅ Correct! Structured thinking helps analyze situations calmly.\n🎉 Quiz completed!")
+            bot.send_message(chat_id, "✅ Correct! Clarity helps you understand the situation before acting, which reduces confusion and mistakes. 👉 Next question:")
         else:
-            bot.send_message(chat_id, "❌ Not correct. Thinking is about analyzing before acting.\n🎉 Quiz completed!")
-        bot.send_message(chat_id, "⚠️ Educational purposes only.\n👉 Explore FAQ to continue learning.")
+            bot.send_message(chat_id, "❌ Not correct. Thinking is about analyzing before acting, not reacting emotionally. 🎉 You’ve completed the Quick Check!")
+        bot.send_message(chat_id, "You’ve completed this section. Reviewing questions like this helps improve understanding and builds stronger learning habits over time.\n⚠️ This content is for educational purposes only.\nThese are projections and not guarantees.,\n👉 To continue learning, explore the FAQ section.")
 
 # ===== WEBHOOK =====
 @app.route(f"/{TOKEN}", methods=["POST"])
