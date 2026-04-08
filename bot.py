@@ -18,68 +18,105 @@ users = {}
 disclaimer = """⚠️ Disclaimer
 
 This bot is created for educational purposes only.
-Trading involves financial risk and may result in loss.
-We do not provide financial advice, signals, or guaranteed results.
+Trading involves financial risk and may result in losses.
+
+We do not provide financial advice, signals, or guaranteed outcomes.
+
+All content is for learning and informational use only.
+These are projections and not guarantees.
 
 By continuing, you confirm that you understand and accept this.
 """
 
-welcome = """Welcome 👋
+welcome = """Welcome 👋  
 
-This is a structured learning space designed to help you understand how trading platforms work — step by step.
+This is a structured learning space designed to help you understand how financial markets and trading platforms work in a clear and simple way.
 
-No shortcuts. No confusion.
-Just clear thinking and practical understanding.
+No shortcuts. No confusing terms.  
+Only step-by-step explanations, practical examples, and focused learning.
 
-Follow the sections below in order 👇
+You will explore how price moves, how markets behave, and how to build a strong foundation through observation and structured thinking.
+
+Take your time, follow each section, and focus on understanding.
+
+⚠️ Educational purposes only.  
+We do not provide financial advice.  
+These are projections and not guarantees.
+
+👇 Choose a section below to begin.
 """
 
 clarity_text = """🧠 Clarity
 
-Clarity in trading means understanding what you are doing before taking any action.
+Clarity in market learning means having a clear understanding of what is happening and why, instead of reacting to movements without thinking. Many beginners struggle not because markets are complex, but because they try to act without fully understanding the situation.
 
-Before entering a trade, always ask:
-• Do I understand the market direction?
-• Am I following a clear plan?
-• Am I avoiding emotional decisions?
+In simple terms, clarity is the ability to slow down and see the market for what it is, rather than what you expect it to be.
 
-Clear thinking helps reduce mistakes and improves decision-making over time.
+Before taking any action, take a moment to ask yourself:
+• What is the price actually doing right now?  
+• Am I following a structured and logical approach?  
+• Is this decision based on observation or emotion?  
 
-Focus on simple strategies and avoid overcomplicating the process.
+📍 Example:
+Imagine you see price suddenly moving upward quickly. Without clarity, a person may react instantly out of excitement or fear of missing out. With clarity, you pause, observe the movement, and try to understand whether this move is stable or temporary. This simple pause can prevent unnecessary mistakes.
 
-“These are projections and not guarantees.”
+Clarity is built over time through observation, patience, and consistent learning. It helps you avoid confusion, reduce emotional reactions, and develop a more disciplined approach to understanding markets.
+
+⚠️ This content is for educational purposes only.  
+These are projections and not guarantees.
+
+👉 To continue learning, explore the Observation section.
 """
 
 observation_text = """👀 Observation
 
-Observation is the ability to carefully watch how the market moves.
+Observation is the skill of carefully watching how the market behaves without rushing to take action. It is not just about looking at the chart, but about understanding what the movement is trying to show over time.
 
-Key things to observe:
-• Price movement
-• Trends (uptrend or downtrend)
-• Support and resistance levels
+Many beginners try to act too quickly, but strong learning comes from watching first and acting later.
 
-Do not rush into trades. Spend time watching and understanding patterns.
+When observing, focus on:
+• How price moves - fast, slow, or sideways  
+• The direction - is it forming an uptrend, downtrend, or no clear trend?  
+• Key areas - where price slows down, stops, or changes direction  
 
-Good observation leads to better timing and smarter decisions.
+📍 Example:
+Imagine price is moving upward, but suddenly it starts slowing down near a certain level. Instead of reacting immediately, observation helps you notice that the market is losing momentum. This gives you a better understanding of what might happen next, rather than guessing.
 
-“These are projections and not guarantees.”
+Observation is about patience. The more time you spend watching patterns and behavior, the more familiar the market becomes. Over time, this reduces confusion and helps you make more structured and thoughtful decisions.
+
+Strong observation builds the foundation for clarity and better thinking.
+
+⚠️ This content is for educational purposes only.  
+These are projections and not guarantees.
+
+👉 To continue learning, explore the Thinking section.
 """
 
 thinking_text = """💭 Thinking
 
-Thinking in trading means analyzing before acting.
+Thinking in market learning means taking time to understand a situation before acting, instead of reacting instantly. It is the process of analyzing what you see, questioning your decision, and making a calm and structured choice.
 
-Always consider:
-• Why am I entering this trade?
-• What is my risk?
-• What is my exit plan?
+Many beginners act quickly based on emotions like excitement, fear, or urgency. Strong thinking helps you slow down and stay in control.
 
-Avoid impulsive decisions. Take time to think logically instead of reacting emotionally.
+Before making any decision, train yourself to ask:
+• What is the reason behind this action?  
+• What are the possible outcomes?  
+• Am I prepared for both positive and negative situations?  
 
-Consistent thinking improves long-term learning.
+📍 Example:
+Imagine you notice price moving quickly in one direction. Without thinking, a person may react immediately. With proper thinking, you pause and consider: Is this movement stable? Has this happened before? What could happen next? This process reduces unnecessary mistakes.
 
-“These are projections and not guarantees.”
+Thinking also includes planning ahead:
+• Understanding your limits  
+• Being aware of uncertainty  
+• Accepting that not every situation is clear  
+
+Over time, structured thinking helps you become more patient, more disciplined, and less influenced by emotions. It turns reactions into decisions.
+
+⚠️ This content is for educational purposes only.  
+These are projections and not guarantees.
+
+👉 To continue learning, explore the Quick Check section.
 """
 
 faq_text = """❓ Frequently Asked Questions (FAQ)
