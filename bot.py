@@ -169,7 +169,7 @@ def menu():
     kb = ReplyKeyboardMarkup(resize_keyboard=True)
     kb.row("🧩 Step 1: Clarity", "👁 Step 2: Observation")
     kb.row("🧠 Step 3: Thinking", "🎯 Quick Check")
-    kb.row("❓ FAQ", "📩 Support")
+    kb.row("❓ FAQ")
     return kb
 
 # ===== START =====
