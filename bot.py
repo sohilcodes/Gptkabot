@@ -208,9 +208,9 @@ def q1(chat_id):
 def q2(chat_id):
     kb = InlineKeyboardMarkup()
     kb.row(
-        InlineKeyboardButton("A) React instantly", callback_data="q2_a"),
+        InlineKeyboardButton("A)", callback_data="q2_a"),
         InlineKeyboardButton("B)", callback_data="q2_b"),
-        InlineKeyboardButton("C) Guarantees outcomes", callback_data="q2_c")
+        InlineKeyboardButton("C)", callback_data="q2_c")
     )
     bot.send_message(chat_id,
         "🧪 Quick Check – Question 2\nWhy is observation important?\n👉 Select your answer below:",
@@ -220,9 +220,9 @@ def q2(chat_id):
 def q3(chat_id):
     kb = InlineKeyboardMarkup()
     kb.row(
-        InlineKeyboardButton("A) Make emotional decisions", callback_data="q3_a"),
-        InlineKeyboardButton("B) Avoid planning", callback_data="q3_b"),
-        InlineKeyboardButton("C) Analyze situations before acting", callback_data="q3_c")
+        InlineKeyboardButton("A)", callback_data="q3_a"),
+        InlineKeyboardButton("B)", callback_data="q3_b"),
+        InlineKeyboardButton("C)", callback_data="q3_c")
     )
     bot.send_message(chat_id,
         "🧪 Quick Check – Question 3\nWhat does structured thinking help you do?\n👉 Select your answer below:",
