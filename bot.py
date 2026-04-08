@@ -213,7 +213,7 @@ def q2(chat_id):
         InlineKeyboardButton("C)", callback_data="q2_c")
     )
     bot.send_message(chat_id,
-        "🧪 Quick Check – Question 2\nWhy is observation important?\n👉 Select your answer below:",
+        "🧪 Quick Check – Question 2\n\nWhy is observation important?\n\nA) It helps you react instantly\nB) It helps you understand patterns and behavior\nC) It guarantees outcomes\n\n👉 Select your answer below:",
         reply_markup=kb
     )
 
