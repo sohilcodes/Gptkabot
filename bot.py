@@ -170,16 +170,19 @@ def start(msg):
 # ===== STEP HANDLERS =====
 @bot.message_handler(func=lambda m: "Step 1" in m.text)
 def step1(m):
-    bot.send_photo(m.chat.id, CLARITY_IMG, caption=clarity_text)
+    bot.send_photo(m.chat.id, CLARITY_IMG)  # just image
+    bot.send_message(m.chat.id, clarity_text)  # long text separately
 
 @bot.message_handler(func=lambda m: "Step 2" in m.text)
 def step2(m):
-    bot.send_photo(m.chat.id, OBSERVATION_IMG, caption=observation_text)
+    bot.send_photo(m.chat.id, OBSERVATION_IMG)
+    bot.send_message(m.chat.id, observation_text)
 
 @bot.message_handler(func=lambda m: "Step 3" in m.text)
 def step3(m):
-    bot.send_photo(m.chat.id, THINKING_IMG, caption=thinking_text)
-
+    bot.send_photo(m.chat.id, THINKING_IMG)
+    bot.send_message(m.chat.id, thinking_text)
+    
 # ===== FAQ & SUPPORT =====
 @bot.message_handler(func=lambda m: "FAQ" in m.text)
 def faq(m):
