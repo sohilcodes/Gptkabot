@@ -119,58 +119,32 @@ These are projections and not guarantees.
 👉 To continue learning, explore the Quick Check section.
 """
 
-faq_text = """❓ Frequently Asked Questions (FAQ)
+faq_text = """The FAQ section answers common beginner questions to help you better understand the purpose and limitations of this educational bot.
 
-1. What is this bot about?
-This bot provides basic educational content about trading and how markets work.
+1. What is this bot about?  
+This bot provides basic educational content to help you understand how markets work step by step.
 
----
+2. Is this financial advice?  
+No. This content is only for educational purposes and does not provide any advice.
 
-2. Is this financial advice?
-No. This bot is created for educational purposes only.
+3. Can I make money using this bot?  
+There is no guarantee of outcomes. The goal is learning, not results.
 
----
+4. Do I need prior experience?  
+No. The content is designed for complete beginners.
 
-3. Can I make money using this information?
-Trading involves risk, and profits are not guaranteed.
+5. Does this bot provide signals or predictions?  
+No. It focuses only on explaining concepts and building understanding.
 
----
+6. How should I use this bot?  
+Follow the lessons step by step and take time to understand each concept.
 
-4. Who is this bot for?
-Beginners who want to understand trading step by step.
+7. Is there any cost?  
+Basic learning content is provided for educational use.
 
----
+This section helps set clear expectations and improves your learning experience.
 
-5. Do I need prior experience?
-No. Everything is beginner-friendly.
-
----
-
-6. Do you provide personal support?
-No one-on-one trading advice.
-
----
-
-7. Is there any cost?
-Basic content is free.
-
----
-
-⚠️ Disclaimer:
-Trading involves financial risk.
-
-“These are projections and not guarantees.”
-"""
-
-support_text = """📩 Support
-
-If you have questions, explore lessons and FAQ first.
-
-This bot is for structured self-learning.
-
-⚠️ Disclaimer:
-We do not provide personal trading advice.
-
+⚠️ This content is for educational purposes only.  
 “These are projections and not guarantees.”
 """
 
